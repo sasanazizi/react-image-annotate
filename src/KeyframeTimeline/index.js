@@ -80,7 +80,6 @@ const KeyframeMarker = styled("div")({
   borderTopLeftRadius: 2,
   borderTopRightRadius: 2,
   height: 12,
-  marginLeft: -8,
   backgroundColor: colors.red[500],
   userSelect: "none",
   fontVariantNumeric: "tabular-nums",

@@ -3,21 +3,19 @@
 import * as muiColors from "@material-ui/core/colors"
 
 export const colors = [
-  muiColors.cyan['A200'],
-  muiColors.lime[500],
-  muiColors.teal[500],
-  muiColors.lightGreen[700],
-  muiColors.blueGrey[500],
-  muiColors.blue[500],
-  muiColors.green[500],
-  muiColors.purple[500],
-  muiColors.indigo[500],
-  muiColors.pink[500],
-  muiColors.red[500],
-  muiColors.orange[800],
-  muiColors.brown[500],
+  muiColors.cyan['A200'], //#18ffff,
+  muiColors.lime[500], //#eeff41,
+  muiColors.teal[500], //#64ffda,
+  muiColors.lightGreen[700], //#b2ff59,
+  muiColors.blue[500], //#448aff,
+  muiColors.green[500], //#69f0ae,
+  muiColors.purple[500], //#e040fb,
+  muiColors.indigo[500], //#536dfe,
+  muiColors.pink[500], //#ff4081,
+  muiColors.red[500], //#ff5252,
+  muiColors.orange[800], //#ffab40,
+  muiColors.brown[500], //#ffff00,
 ]
-
 const transparency = 0x88000000
 
 function reverseParseColor(rrggbb) {

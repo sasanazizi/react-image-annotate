@@ -10,6 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
 import MonacoEditor from "react-monaco-editor"
+import colors from "../colors"
 
 const useStyles = makeStyles({
   editBar: {
@@ -44,19 +45,30 @@ export const examples = {
     // regionTagList: [],
     // regionClsList: ["hotdog"],
     regionTagList: ["has-bun"],
-    regionClsList: ["hotdog", "not-hotdog"],
+    regionClsList: [
+      { name: "wheel", color: colors[4] },
+      { name: "seat", color: colors[8] },
+    ],
     enabledTools: ["select", "create-box"],
     // showTags: true,
     images: [
       {
         src:
-          "https://images.unsplash.com/photo-1496905583330-eb54c7e5915a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-        name: "hot-dogs-1",
-      },
-      {
-        src:
           "https://www.bianchi.com/wp-content/uploads/2019/07/YPB17I555K.jpg",
         name: "bianchi-oltre-xr4",
+        regions: [
+          {
+            cls: "wheel",
+            color: "#18ffff",
+            h: 0.2682341650671785,
+            highlighted: true,
+            id: 0,
+            type: "box",
+            w: 0.15227127319257838,
+            x: 0.21305182341650672,
+            y: 0.21689059500959693,
+          },
+        ],
       },
     ],
     allowComments: true,

@@ -45,6 +45,7 @@ export const RegionLabel = ({
   onRegionClassAdded,
   allowComments,
 }: Props) => {
+  console.log({ region })
   const classes = useStyles()
   const commentInputRef = useRef(null)
   const onCommentInputClick = (_) => {
@@ -69,7 +70,7 @@ export const RegionLabel = ({
                 className="circle"
                 style={{ backgroundColor: region.color }}
               />
-              {region.cls}
+              {region.cls.name ? region.cls.name : region.cls}
             </div>
           )}
           {region.tags && (
@@ -125,10 +126,15 @@ export const RegionLabel = ({
                   })
                 }}
                 value={
-                  region.cls ? { label: region.cls, value: region.cls } : null
+                  region.cls
+                    ? {
+                        label: region.cls.name ? region.cls.name : region.cls,
+                        value: region.cls,
+                      }
+                    : null
                 }
                 options={asMutable(
-                  allowedClasses.map((c) => ({ value: c, label: c }))
+                  allowedClasses.map((c) => ({ value: c, label: c.name }))
                 )}
               />
             </div>

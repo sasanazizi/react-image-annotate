@@ -81,15 +81,15 @@ export const ClassSelectionMenu = ({
     >
       {regionClsList.map((label, index) => (
         <LabelContainer
-          className={classnames({ selected: label === selectedCls })}
+          className={classnames({ selected: label.name === selectedCls?.name })}
           onClick={() => onSelectCls(label)}
         >
-          <Circle style={{ backgroundColor: colors[index % colors.length] }} />
-          <Label className={classnames({ selected: label === selectedCls })}>
-            {capitalize(label)}
+          <Circle style={{ backgroundColor: label.color }} />
+          <Label className={classnames({ selected: label.name === selectedCls?.name })}>
+            {capitalize(label.name)}
           </Label>
           <DashSep />
-          <Number className={classnames({ selected: label === selectedCls })}>
+          <Number className={classnames({ selected: label.name === selectedCls?.name })}>
             {index < 9 ? `Key [${index + 1}]` : ""}
           </Number>
         </LabelContainer>

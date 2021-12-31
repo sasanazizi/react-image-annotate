@@ -30,7 +30,7 @@ const Chip = ({ color, text }) => {
   return (
     <span className={classes.chip}>
       <div className="color" style={{ backgroundColor: color }} />
-      <div className="text">{text}</div>
+      <div className="text">{text.name ? text.name : text}</div>
     </span>
   )
 }
@@ -115,7 +115,7 @@ const Row = ({
       highlighted={highlighted}
       onClick={() => onSelectRegion(r)}
       order={`#${index + 1}`}
-      classification={<Chip text={cls || ""} color={color || "#ddd"} />}
+      classification={<Chip text={cls || "no-name"} color={color} />}
       area=""
       trash={<TrashIcon onClick={() => onDeleteRegion(r)} className="icon2" />}
       lock={

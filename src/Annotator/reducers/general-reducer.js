@@ -136,7 +136,7 @@ export default (state: MainLayoutState, action: Action) => {
         const clsIndex = state.regionClsList.indexOf(action.region.cls)
         if (clsIndex !== -1) {
           state = setIn(state, ["selectedCls"], action.region.cls)
-          action.region.color = colors[clsIndex % colors.length]
+          action.region.color = action.region.cls.color
         }
       }
       if (!isEqual(oldRegion.tags, action.region.tags)) {
@@ -525,12 +525,13 @@ export default (state: MainLayoutState, action: Action) => {
       }
 
       let newRegion
+
       let defaultRegionCls = state.selectedCls,
-        defaultRegionColor = colors[0];
+        defaultRegionColor = state.selectedCls?.color || colors[0];
 
       const clsIndex = (state.regionClsList || []).indexOf(defaultRegionCls)
       if (clsIndex !== -1) {
-        defaultRegionColor = colors[clsIndex % colors.length]
+        defaultRegionColor = state.selectedCls.color
       }
 
       switch (state.selectedTool) {
