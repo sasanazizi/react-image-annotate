@@ -1,8 +1,8 @@
 // @flow
 
-import React, { useState } from "react"
+import React, {useState} from "react"
 import Button from "@material-ui/core/Button"
-import { makeStyles } from "@material-ui/core/styles"
+import {makeStyles} from "@material-ui/core/styles"
 import Select from "react-select"
 import Code from "react-syntax-highlighter"
 import Dialog from "@material-ui/core/Dialog"
@@ -13,178 +13,183 @@ import MonacoEditor from "react-monaco-editor"
 import colors from "../colors"
 
 const useStyles = makeStyles({
-  editBar: {
-    padding: 10,
-    borderBottom: "1px solid #ccc",
-    backgroundColor: "#f8f8f8",
-    display: "flex",
-    alignItems: "center",
-    "& .button": { margin: 5 },
-  },
-  select: { width: 240, fontSize: 14 },
-  contentArea: {
-    padding: 10,
-  },
-  specificationArea: {
-    padding: 10,
-  },
+    editBar: {
+        padding: 10,
+        borderBottom: "1px solid #ccc",
+        backgroundColor: "#f8f8f8",
+        display: "flex",
+        alignItems: "center",
+        "& .button": {margin: 5},
+    },
+    select: {width: 240, fontSize: 14},
+    contentArea: {
+        padding: 10,
+    },
+    specificationArea: {
+        padding: 10,
+    },
 })
 
 const loadSavedInput = () => {
-  try {
-    return JSON.parse(window.localStorage.getItem("customInput") || "{}")
-  } catch (e) {
-    return {}
-  }
+    try {
+        return JSON.parse(window.localStorage.getItem("customInput") || "{}")
+    } catch (e) {
+        return {}
+    }
 }
+
+const categoriesList = [
+    {name: "wheel", color: colors[4]},
+    {name: "seat", color: colors[8]},
+];
+console.log({categoriesList});
 
 export const examples = {
-  "Simple Bounding Box": () => ({
-    taskDescription:
-      "Annotate each image according to this _markdown_ specification.",
-    // regionTagList: [],
-    // regionClsList: ["hotdog"],
-    regionTagList: ["has-bun"],
-    regionClsList: [
-      { name: "wheel", color: colors[4] },
-      { name: "seat", color: colors[8] },
-    ],
-    enabledTools: ["select", "create-box"],
-    // showTags: true,
-    images: [
-      {
-        src:
-          "https://www.bianchi.com/wp-content/uploads/2019/07/YPB17I555K.jpg",
-        name: "bianchi-oltre-xr4",
-        regions: [
-          {
-            cls: "wheel",
-            color: "#18ffff",
-            h: 0.2682341650671785,
-            highlighted: true,
-            id: 0,
-            type: "box",
-            w: 0.15227127319257838,
-            x: 0.21305182341650672,
-            y: 0.21689059500959693,
-          },
+    "Simple Bounding Box": () => ({
+        taskDescription:
+            "Annotate each image according to this _markdown_ specification.",
+        // regionTagList: [],
+        // regionClsList: ["hotdog"],
+        regionTagList: ["has-bun"],
+        regionClsList: categoriesList,
+        enabledTools: ["select", "create-box"],
+        // showTags: true,
+        images: [
+            {
+                id: "5219",
+                key: "5219",
+                src:
+                    "https://www.bianchi.com/wp-content/uploads/2019/07/YPB17I555K.jpg",
+                name: "bianchi-oltre-xr4",
+                regions: [
+                    {
+                        cls: "wheel",
+                        color: "#18ffff",
+                        h: 0.2682341650671785,
+                        highlighted: true,
+                        id: 0,
+                        type: "box",
+                        w: 0.15227127319257838,
+                        x: 0.21305182341650672,
+                        y: 0.21689059500959693,
+                    },
+                ],
+            },
         ],
-      },
-    ],
-    allowComments: true,
-  }),
-  "Simple Segmentation": () => ({
-    taskDescription:
-      "Annotate each image according to this _markdown_ specification.",
-    regionClsList: ["car", "truck"],
-    enabledTools: ["select", "create-polygon"],
-    images: [
-      {
-        src:
-          "https://images.unsplash.com/photo-1561518776-e76a5e48f731?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        name: "car-image-1",
-      },
-    ],
-  }),
-  Custom: () => loadSavedInput(),
+        allowComments: true,
+    }),
+    "Simple Segmentation": () => ({
+        taskDescription:
+            "Annotate each image according to this _markdown_ specification.",
+        regionClsList: ["car", "truck"],
+        enabledTools: ["select", "create-polygon"],
+        images: [
+            {
+                src:
+                    "https://images.unsplash.com/photo-1561518776-e76a5e48f731?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                name: "car-image-1",
+            },
+        ],
+    }),
+    Custom: () => loadSavedInput(),
 }
 
-const Editor = ({ onOpenAnnotator, lastOutput }: any) => {
-  const c = useStyles()
-  const [currentError, changeCurrentError] = useState()
-  const [selectedExample, changeSelectedExample] = useState(
-    window.localStorage.getItem("customInput")
-      ? "Custom"
-      : "Simple Bounding Box"
-  )
-  const [outputDialogOpen, changeOutputOpen] = useState(false)
-  const [currentJSONValue, changeCurrentJSONValue] = useState(
-    JSON.stringify(examples[selectedExample](), null, "  ")
-  )
-  return (
-    <div>
-      <div className={c.editBar}>
-        <h3>React Image Annotate</h3>
-        <div style={{ flexGrow: 1 }} />
+const Editor = ({onOpenAnnotator, lastOutput}: any) => {
+    const c = useStyles()
+    const [currentError, changeCurrentError] = useState()
+    const [selectedExample, changeSelectedExample] = useState(
+        window.localStorage.getItem("customInput")
+            ? "Custom"
+            : "Simple Bounding Box"
+    )
+    const [outputDialogOpen, changeOutputOpen] = useState(false)
+    const [currentJSONValue, changeCurrentJSONValue] = useState(
+        JSON.stringify(examples[selectedExample](), null, "  ")
+    )
+    return (
         <div>
-          <div style={{ display: "inline-flex" }}>
-            <Select
-              className={c.select}
-              value={{ label: selectedExample, value: selectedExample }}
-              options={Object.keys(examples).map((s) => ({
-                label: s,
-                value: s,
-              }))}
-              onChange={(selectedOption) => {
-                changeSelectedExample(selectedOption.value)
+            <div className={c.editBar}>
+                <h3>React Image Annotate</h3>
+                <div style={{flexGrow: 1}}/>
+                <div>
+                    <div style={{display: "inline-flex"}}>
+                        <Select
+                            className={c.select}
+                            value={{label: selectedExample, value: selectedExample}}
+                            options={Object.keys(examples).map((s) => ({
+                                label: s,
+                                value: s,
+                            }))}
+                            onChange={(selectedOption) => {
+                                changeSelectedExample(selectedOption.value)
 
-                changeCurrentJSONValue(
-                  JSON.stringify(
-                    selectedOption.value === "Custom"
-                      ? loadSavedInput()
-                      : examples[selectedOption.value](),
-                    null,
-                    "  "
-                  )
-                )
-              }}
-            />
-          </div>
-          <Button
-            className="button"
-            disabled={!lastOutput}
-            onClick={() => changeOutputOpen(true)}
-          >
-            View Output
-          </Button>
-          <Button
-            className="button"
-            variant="outlined"
-            disabled={Boolean(currentError)}
-            onClick={() => {
-              onOpenAnnotator(
-                selectedExample === "Custom"
-                  ? loadSavedInput()
-                  : examples[selectedExample]
-              )
-            }}
-          >
-            Open Annotator
-          </Button>
-        </div>
-      </div>
-      <div
-        className={c.contentArea}
-        style={
-          currentError
-            ? { border: "2px solid #f00" }
-            : { border: "2px solid #fff" }
-        }
-      >
-        <div>
-          <MonacoEditor
-            value={currentJSONValue}
-            language="javascript"
-            onChange={(code) => {
-              try {
-                window.localStorage.setItem(
-                  "customInput",
-                  JSON.stringify(JSON.parse(code))
-                )
-                changeCurrentError(null)
-              } catch (e) {
-                changeCurrentError(e.toString())
-              }
-              changeCurrentJSONValue(code)
-            }}
-            width="100%"
-            height="550px"
-          />
-        </div>
-      </div>
-      <div className={c.specificationArea}>
-        <h2>React Image Annotate Format</h2>
-        <Code language="javascript">{`
+                                changeCurrentJSONValue(
+                                    JSON.stringify(
+                                        selectedOption.value === "Custom"
+                                            ? loadSavedInput()
+                                            : examples[selectedOption.value](),
+                                        null,
+                                        "  "
+                                    )
+                                )
+                            }}
+                        />
+                    </div>
+                    <Button
+                        className="button"
+                        disabled={!lastOutput}
+                        onClick={() => changeOutputOpen(true)}
+                    >
+                        View Output
+                    </Button>
+                    <Button
+                        className="button"
+                        variant="outlined"
+                        disabled={Boolean(currentError)}
+                        onClick={() => {
+                            onOpenAnnotator(
+                                selectedExample === "Custom"
+                                    ? loadSavedInput()
+                                    : examples[selectedExample]
+                            )
+                        }}
+                    >
+                        Open Annotator
+                    </Button>
+                </div>
+            </div>
+            <div
+                className={c.contentArea}
+                style={
+                    currentError
+                        ? {border: "2px solid #f00"}
+                        : {border: "2px solid #fff"}
+                }
+            >
+                <div>
+                    <MonacoEditor
+                        value={currentJSONValue}
+                        language="javascript"
+                        onChange={(code) => {
+                            try {
+                                window.localStorage.setItem(
+                                    "customInput",
+                                    JSON.stringify(JSON.parse(code))
+                                )
+                                changeCurrentError(null)
+                            } catch (e) {
+                                changeCurrentError(e.toString())
+                            }
+                            changeCurrentJSONValue(code)
+                        }}
+                        width="100%"
+                        height="550px"
+                    />
+                </div>
+            </div>
+            <div className={c.specificationArea}>
+                <h2>React Image Annotate Format</h2>
+                <Code language="javascript">{`
 {
   taskDescription?: string, // markdown
   regionTagList?: Array<string>,
@@ -224,23 +229,23 @@ const Editor = ({ onOpenAnnotator, lastOutput }: any) => {
   }>,
 }
 `}</Code>
-      </div>
-      <Dialog fullScreen open={outputDialogOpen}>
-        <DialogTitle>React Image Annotate Output</DialogTitle>
-        <DialogContent style={{ minWidth: 400 }}>
-          <MonacoEditor
-            value={JSON.stringify(lastOutput, null, "  ")}
-            language="javascript"
-            width="100%"
-            height="550px"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => changeOutputOpen(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  )
+            </div>
+            <Dialog fullScreen open={outputDialogOpen}>
+                <DialogTitle>React Image Annotate Output</DialogTitle>
+                <DialogContent style={{minWidth: 400}}>
+                    <MonacoEditor
+                        value={JSON.stringify(lastOutput, null, "  ")}
+                        language="javascript"
+                        width="100%"
+                        height="550px"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => changeOutputOpen(false)}>Close</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    )
 }
 
 export default Editor

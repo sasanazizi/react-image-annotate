@@ -27,7 +27,7 @@ const RegionComponents = {
         x2={(region.x2 - region.x1) * iw}
         y2={(region.y2 - region.y1) * ih}
         stroke={colorAlpha(region.color, 0.75)}
-        fill={colorAlpha(region.color, 0.25)}
+        fill={colorAlpha(region.color, 0.1)}
       />
     </g>
   )),
@@ -40,7 +40,7 @@ const RegionComponents = {
         width={Math.max(region.w * iw, 0)}
         height={Math.max(region.h * ih, 0)}
         stroke={colorAlpha(region.color, 0.75)}
-        fill={colorAlpha(region.color, 0.25)}
+        fill={colorAlpha(region.color, 0.1)}
       />
     </g>
   )),
@@ -55,7 +55,7 @@ const RegionComponents = {
           .join(" ")}
         strokeWidth={2}
         stroke={colorAlpha(region.color, 0.75)}
-        fill={colorAlpha(region.color, 0.25)}
+        fill={colorAlpha(region.color, 0.1)}
       />
     )
   }),
@@ -140,7 +140,7 @@ const RegionComponents = {
             .join(" ")}
           strokeWidth={2}
           stroke={colorAlpha(region.color, 0.75)}
-          fill={colorAlpha(region.color, 0.25)}
+          fill={colorAlpha(region.color, 0.1)}
         />
         {points.map(({ x, y, angle }, i) => (
           <g
@@ -157,7 +157,7 @@ const RegionComponents = {
                 height={10}
                 strokeWidth={2}
                 stroke={colorAlpha(region.color, 0.75)}
-                fill={colorAlpha(region.color, 0.25)}
+                fill={colorAlpha(region.color, 0.1)}
               />
             </g>
           </g>

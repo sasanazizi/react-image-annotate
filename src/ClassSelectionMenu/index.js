@@ -56,6 +56,7 @@ export const ClassSelectionMenu = ({
   regionClsList,
   onSelectCls,
 }) => {
+  console.log({selectedCls, regionClsList});
   useEffect(() => {
     const keyMapping = {}
     for (let i = 0; i < 9 && i < regionClsList.length; i++) {
